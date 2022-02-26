@@ -33,13 +33,36 @@ function getProducts(productId) {
 
     function createBasket (productId) {
         document.getElementById('addToCart').addEventListener('click', () => {
-        let color = (document.getElementById("colors").value)
-        let quantity = (document.getElementById("quantity").value)
-        let id = productId
-        let basket = {
+            let color = (document.getElementById("colors").value)
+            let quantity = (document.getElementById("quantity").value)
+            let productName = (document.getElementById("title").textContent)
+            let id = productId
+            let basket = {
             color,
-            quantity,
+            quantity : parseInt(quantity),
             id
-        }
-        
-    })}
+            }
+            if(quantity >=1 && quantity <= 100 &&color !== null && color !== "") {
+                if(localStorage.getItem("basket")) {
+                let getBasket = JSON.parse(localStorage.getItem("basket"));
+                const index = getBasket.findIndex(cart => cart.id === basket.id && cart.color === basket.color);
+                if (index >= 0) {
+                    getBasket[index].quantity = basket.quantity + getBasket[index].quantity;
+                    localStorage.setItem("basket",JSON.stringify(getBasket))
+                }
+                else{
+                getBasket.push(basket)
+                localStorage.setItem("basket",JSON.stringify(getBasket))
+                }
+            }
+            else{
+                basketTab = new Array( basket)
+                localStorage.setItem("basket",JSON.stringify(basketTab))
+            }
+            alert(`Vous avez bien ajouté ${quantity} ${productName} ${color}`)
+            }
+            else{
+            alert("Erreur, la selection n'est pas valide")
+            } 
+        })
+    }   

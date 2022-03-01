@@ -149,9 +149,10 @@ function dataUser(){
       city: document.getElementById("city").value,
       email: document.getElementById("email").value
     }
-    //Using regex to control the user data////// send the user data in the localStorage to save them//
+    //Using regex to control the user data////// send the user data in the localStorage to save them and POST to API//
     if(firstNameControl() && lastNameControl() && adressControl() && cityControl() && EmailControl()){
       localStorage.setItem("contact",JSON.stringify(contact)) ;
+      sendToApi();
     }
     else {
       alert("Veuillez remplir les champs invalides")
@@ -231,5 +232,5 @@ function dataUser(){
         document.location.href = 'confirmation.html?id='+ data.orderId;
       })
     }
-    sendToApi();
+    
 })}
